@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">StatisticCalculationApp</string>
+    <string name="probability_of_success">probability_of_success</string>
+    <string name="ex_0_3">e.x. 0.3</string>
+    <string name="enter_number_of_attempts">enter_number_of_attempts</string>
+    <string name="ex_100">e.x. 100</string>
+    <string name="ja_number_of_attempts">試行回数</string>
+    <string name="ja_probability_of_success">成功確率</string>
+    <string name="ja_number_of_success">成功回数</string>
+    <string name="execute">execute</string>
+    <string name="switch_button">switch</string>
+    <string name="binomial_distribution">二項分布</string>
+</resources>
