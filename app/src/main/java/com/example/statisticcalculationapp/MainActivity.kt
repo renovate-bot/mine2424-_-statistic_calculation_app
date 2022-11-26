@@ -1,11 +1,13 @@
 package com.example.statisticcalculationapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
+import com.example.statisticcalculationapp.databinding.ActivityMainBinding
+import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,201 +19,84 @@ class MainActivity : AppCompatActivity() {
         switchViewButton.setOnClickListener {
             //  一部のビューだけを変更する
             // 変更したいレイアウトを取得する
-            val layout: LinearLayout = findViewById(R.id.layout)
+            val layout: ConstraintLayout = findViewById(R.id.layout)
             // レイアウトのビューをすべて削除する
             layout.removeAllViews()
             // レイアウトをR.layout.poissonに変更する
             layoutInflater.inflate(R.layout.poisson, layout)
         }
 
-        val attemptsNum = findViewById<EditText>(R.id.edit_number_of_attempts)
-        val successNum = findViewById<EditText>(R.id.edit_number_of_success)
-        val probabilityOfSuccessNum = findViewById<EditText>(R.id.edit_probability_of_success)
+        // -------------------------------------- //
 
+        val resultBinding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val executeButton: Button = findViewById(R.id.execute_button)
         executeButton.setOnClickListener {
-            val debugText = "試行回数: $attemptsNum, 成功回数: $successNum, 成功確率: $probabilityOfSuccessNum"
+            val attemptsNum = findViewById<EditText>(R.id.edit_number_of_attempts)
+            val successNum = findViewById<EditText>(R.id.edit_number_of_success)
+            val probabilityOfSuccessNum = findViewById<EditText>(R.id.edit_probability_of_success)
+
+            val debugText = "試行回数: ${attemptsNum.text}, 成功回数: ${successNum.text}, 成功確率: ${probabilityOfSuccessNum.text}"
             println(debugText)
-            Toast.makeText(this, attemptsNum.toString(), Toast.LENGTH_SHORT).show()
+
+            val result = Result(
+                "",
+                attemptsNum.text.toString().toInt(),
+                successNum.text.toString().toInt(),
+                probabilityOfSuccessNum.text.toString().toDouble(),
+            )
+
+
+            val combiVal = calcCombination(result.attemptsNumber, result.successNumber)
+            println("combiVal: ${combiVal}")
+            val sum = calcBinomialDistribution(result.attemptsNumber, result.successNumber, result.probabilityOfSuccess, combiVal)
+            result.summary = sum.toString()
+            println("sum: ${sum}")
+            resultBinding.summaryTextView.text = result.summary
+        }
+    }
+
+    // 組み合わせの実装(nCt)
+    private fun calcCombination(n: Int, t: Int): Int {
+        if (n < 0 || t < 0 || t > n) throw Throwable("不正な引数です")
+
+        var r: Int = t
+        if (n - r < r) r = n - r
+        if (r == 0) return 1
+        if (r == 1) return n
+
+        val numerator = IntArray(r)
+        val denominator = IntArray(r)
+
+        for (k in 0 until r) {
+            numerator[k] = n - r + k + 1
+            denominator[k] = k + 1
         }
 
-//
-//        /* 値を格納する変数 */
-//        var value = 0
-//
-//        /* 計算結果をクリアするかどうかを判断するためのフラグ */
-//        /* trueの時に数字ボタンが押された時に計算結果をクリアする */
-//        /*
-//            例えば"="押された時にフラグをtrueにし、
-//            その後数字ボタンが押された時などにクリアするために使う
-//        */
-//        var clear = false
-//
-//        /* 計算処理を行うかどうかを判断するためのフラグ */
-//        /* trueの時にのみ計算ボタンが押された時に計算処理を行う */
-//        /*
-//            例えば"+"押された後に、
-//            数字ボタンが押されないまま"-"が押された時等は
-//            計算は行いたくないのでこのフラグを利用して制御する
-//         */
-//        var calc = false
-//
-//        /* 演算子を記憶しておく変数 */
-//        /* nullの可能性あり */
-//        var operator : String? = null
-//
-//        /* 数字ボタン */
-//        val buttonZero : Button = findViewById(R.id.zero)
-//        val buttonOne : Button = findViewById(R.id.one)
-//        val buttonTwo : Button = findViewById(R.id.two)
-//        val buttonThree : Button = findViewById(R.id.three)
-//        val buttonFour : Button = findViewById(R.id.four)
-//        val buttonFive : Button = findViewById(R.id.five)
-//        val buttonSix : Button = findViewById(R.id.six)
-//        val buttonSeven : Button = findViewById(R.id.seven)
-//        val buttonEight : Button = findViewById(R.id.eight)
-//        val buttonNine : Button = findViewById(R.id.nine)
-//
-//        /* 計算ボタン */
-//        val buttonAdd : Button = findViewById(R.id.add)
-//        val buttonMul : Button = findViewById(R.id.mul)
-//        val buttonSub : Button = findViewById(R.id.sub)
-//        val buttonDiv :Button = findViewById(R.id.div)
-//
-//        /* 実行ボタン */
-//        val buttonEqual:Button = findViewById(R.id.equal)
-//
-//        /* クリアボタン */
-//        val buttonClear : Button = findViewById(R.id.clear)
-//
-//        /* 表示テキスト */
-//        val textArea : TextView = findViewById(R.id.display)
-//
-//        /* 数字ボタンを押された時の処理をまとめた関数 */
-//        fun numButtonAction(num : String) {
-//            textArea.text = if(textArea.text.toString() != "0" && !clear){
-//                textArea.text.toString() + num
-//            } else {
-//                clear = false
-//                num
-//            }
-//            calc = true
-//        }
-//
-//        /* クリアボタンを押された時の処理 */
-//        /* 全て初期値に戻す */
-//        buttonClear.setOnClickListener {
-//            textArea.text ="0"
-//            value = 0
-//            operator = null
-//            clear = false
-//            calc = false
-//        }
-//
-//        /* 数字ボタンを押された時の処理 */
-//        /* 表示領域を更新 */
-//        buttonZero.setOnClickListener {
-//            numButtonAction("0")
-//        }
-//
-//        buttonOne.setOnClickListener {
-//            numButtonAction("1")
-//        }
-//
-//        buttonTwo.setOnClickListener {
-//            numButtonAction("2")
-//        }
-//
-//        buttonThree.setOnClickListener {
-//            numButtonAction("3")
-//        }
-//
-//        buttonFour.setOnClickListener {
-//            numButtonAction("4")
-//        }
-//
-//        buttonFive.setOnClickListener {
-//            numButtonAction("5")
-//        }
-//
-//        buttonSix.setOnClickListener {
-//            numButtonAction("6")
-//        }
-//
-//        buttonSeven.setOnClickListener {
-//            numButtonAction("7")
-//        }
-//
-//        buttonEight.setOnClickListener {
-//            numButtonAction("8")
-//        }
-//
-//        buttonNine.setOnClickListener {
-//            numButtonAction("9")
-//        }
-//
-//        /* 計算の実処理を行う関数 */
-//        fun calculation(op : String?) :Int {
-//            return when (op) {
-//                "+" -> {
-//                    value + textArea.text.toString().toInt()
-//                }
-//                "-" -> {
-//                    value - textArea.text.toString().toInt()
-//                }
-//                "*" -> {
-//                    value * textArea.text.toString().toInt()
-//                }
-//                "/" -> {
-//                    value / textArea.text.toString().toInt()
-//                }
-//                else -> {
-//                    textArea.text.toString().toInt()
-//                }
-//            }
-//        }
-//
-//        /* 計算ボタンを押された時の処理をまとめた関数 */
-//        fun calcButtonAction(op : String?) {
-//            /* 計算処理有効の場合のみ計算と表示の更新を行う */
-//            if (calc) {
-//                value = calculation(operator)
-//                clear = true
-//                calc = false
-//                textArea.text = value.toString()
-//            }
-//            /* 演算子は計算処理無効でも更新 */
-//            operator = op
-//        }
-//
-//
-//        /* 計算ボタンが押された時の処理 */
-//        buttonAdd.setOnClickListener {
-//            calcButtonAction("+")
-//        }
-//
-//        buttonMul.setOnClickListener {
-//            calcButtonAction("*")
-//        }
-//
-//        buttonSub.setOnClickListener {
-//            calcButtonAction("-")
-//        }
-//
-//        buttonDiv.setOnClickListener {
-//            calcButtonAction("/")
-//        }
-//
-//        /* "="ボタンが押された時の処理 */
-//        buttonEqual.setOnClickListener {
-//            /* 計算処理有効の場合のみ計算と表示の更新を行う */
-//            if (calc) {
-//                value = calculation(operator)
-//                calc = false
-//                clear = true
-//                textArea.text = value.toString()
-//                operator = null
-//            }
-//        }
+        for (p in 2..r) {
+            val pivot = denominator[p - 1]
+            if (pivot > 1) {
+                val offset: Int = (n - r) % p
+                var k = p - 1
+                while (k < r) {
+                    numerator[k - offset] /= pivot
+                    denominator[k] /= pivot
+                    k += p
+                }
+            }
+        }
+
+        var result = 1
+        for (k in 0 until r) {
+            if (numerator[k] > 1) result *= numerator[k]
+        }
+
+        return result
     }
+    // 二項分布関数の実装
+    private fun calcBinomialDistribution(n: Int, k: Int, p: Double, combiVal: Int): Double {
+        val successP = p.pow(k)
+        val failedP = (1-p).pow(n-k)
+        return combiVal * successP * failedP
+    }
+
 }
