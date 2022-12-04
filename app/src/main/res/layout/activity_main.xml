@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/switchViewButton"
+            android:id="@+id/switchPoViewButton"
             android:layout_width="145dp"
             android:layout_height="56dp"
             android:layout_marginStart="142dp"

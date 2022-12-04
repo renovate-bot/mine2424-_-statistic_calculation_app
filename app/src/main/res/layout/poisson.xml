@@ -1,8 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0000FF"
-    >
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="result" type="com.example.statisticcalculationapp.Result" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxWidth="800dp"
+        android:maxHeight="1200dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="53dp"
+            android:layout_marginTop="71dp"
+            android:layout_marginBottom="46dp"
+            android:text="@string/poissonDistribution"
+            app:layout_constraintBottom_toTopOf="@+id/summaryTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/switchBiViewButton"
+            android:layout_width="145dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="142dp"
+            android:layout_marginTop="59dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="34dp"
+            android:text="@string/switch_button"
+            app:layout_constraintBottom_toTopOf="@+id/summaryTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/summaryTextView"
+            android:layout_width="232dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="136dp"
+            android:text="@{result.summary}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.425"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="41dp"
+            android:layout_marginEnd="253dp"
+            android:text="@string/ja_number_of_attempts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView">
+
+            <EditText
+                android:id="@+id/edit_number_of_attempts"
+                android:layout_width="252dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="102dp"
+                android:layout_marginTop="236dp"
+                android:layout_marginEnd="61dp"
+                android:autofillHints="0"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="253dp"
+            android:text="@string/ja_probability_of_success"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView">
+
+            <EditText
+                android:id="@+id/edit_probability_of_success"
+                android:layout_width="251dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="102dp"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="58dp"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNumber3"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="102dp"
+            android:layout_marginTop="272dp"
+            android:layout_marginEnd="253dp"
+            android:text="@string/ja_number_of_success"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="292dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView">
+
+            <EditText
+                android:id="@+id/edit_number_of_success"
+                android:layout_width="251dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="102dp"
+                android:layout_marginTop="208dp"
+                android:layout_marginEnd="58dp"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNumber3"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/execute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="141dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="169dp"
+            android:layout_marginBottom="51dp"
+            android:text="@string/execute"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/summaryTextView"
+            app:layout_constraintVertical_bias="0.895" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

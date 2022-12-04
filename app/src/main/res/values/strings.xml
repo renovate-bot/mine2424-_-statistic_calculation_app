@@ -10,4 +10,5 @@
     <string name="execute">execute</string>
     <string name="switch_button">switch</string>
     <string name="binomial_distribution">二項分布</string>
+    <string name="poissonDistribution">ポアソン分布</string>
 </resources>
